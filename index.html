@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>3D</title>
+    <script src="stl_viewer.min.js"></script>
+</head>
+
+<body>
+<div id="stl_cont" style="width:1000px;height:600px;margin:0 auto;"></div>
+<script>
+
+    var fileContent = null; 
+
+    setInterval(function() {
+        fetch('http://impresorahacker.tk:8080/final.stl')
+        .then(function(response) {
+            response.text().then(function(newContent){
+                console.log("TOTES", response.status);
+                if(fileContent === null) {
+                    fileContent = newContent;
+                }
+                else if(newContent !== fileContent) {
+                    window.location.reload();
+                    
+                }
+            })
+            
+        })
+    }, 2000)
+
+    var stl_viewer = new StlViewer
+    (
+        document.getElementById("stl_cont"),
+        {
+            auto_rotate:true,
+            zoom: 50,
+            models:
+                [
+                    {filename: "final.stl"}
+                ]
+        }
+    );
+</script>
+
+</body>
+</html>
